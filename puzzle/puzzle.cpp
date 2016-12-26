@@ -24,7 +24,7 @@
 
 #define caption " ----------------\n// GAME PUZZLE //\n----------------\n"
 
-#define fieldSize 4
+#define fieldSize 3
 #define WINDOWS 1
 
 void clrscr() {
@@ -227,7 +227,7 @@ main() {
         puts("\t2. Medium");
         puts("\t3. Hard");
         printf("Pilih Level yang akan dimainkan : ");
-         scanf("%i", &level);
+        scanf("%i", &level);
         
         switch (level) {
             case 1 :
@@ -248,7 +248,7 @@ main() {
         system("cls");
 
         generateOutput();
-
+        
         while ((key = getch()) != 27) {
             switch(key) {
                 case keyUp :
