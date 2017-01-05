@@ -47,10 +47,6 @@ void move(int arah);
 void generateOutput();
 int cekUrut();
 
-//fungsi di bot
-int HitungUrut();
-int HitungJarak();
-
 int acak(int i) {
     int a;
     seed += 5;
@@ -199,25 +195,8 @@ int cekUrut() {
     return(match);
 }
 
-//bot game start
-//hitung kesesuaian
-
-int HitungUrut() {
-    int c, d,jum;
-	jum = 0;
-    for (c = 0; c <= (fieldSize - 1); c++) {
-        for (d = 0; d <= (fieldSize - 1); d++) {
-            if (field[c][d] != field2[c][d]) {
-                jum += 1;
-				}
-        }
-    }
-    return(jum-1);
-}
-// end bot program
-
 main() {
-    int i, j, k, level,jumlah;
+    int i, j, k, level;
     char key;
 
     system("cls");
@@ -260,10 +239,6 @@ main() {
             case 3 :
                 initField(hard);
                 break;
-            case 99 :
-            	//bot game triggered
-            	initField(easy);
-            	break;
             default :
                 puts("Level salah!!");
                 getch();
@@ -271,17 +246,8 @@ main() {
         }
         
         system("cls");
-		if(level == 99){
-			//run this
-			generateOutput();
-			jumlah = HitungUrut();
-			printf("Jumlah blok yang sesuai : %i \n",jumlah);
-			system("PAUSE");
-			//
-		}
-		else{
 		
-		generateOutput();
+        generateOutput();
         
 		while ((key = getch()) != 27) {
             switch(key) {
@@ -304,7 +270,6 @@ main() {
                 break;
             }
         }
-    	}
         if (key == 27) {
             printf("Apakah anda ingin keluar ?\n['y' utk keluar / 't' utk reset] : ");
             if (toupper(getchar()) == 'Y') break;
