@@ -18,7 +18,7 @@
 #define true 1
 #define false 0
 
-#define easy 4
+#define easy 10
 #define medium 20
 #define hard 30
 
