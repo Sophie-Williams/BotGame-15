@@ -1,3 +1,13 @@
 1:57 PM 12-Jan-17
 move berjalan baik ++
 pemilihan move masih salah --
+
+2:11 PM 12-Jan-17
+finishing touch untuk move terakhir benar ++
+move untuk lebih dari itu masih salah --
+//butuh penentu keputusan yang lebih baik
+
+5:26 PM 13-Jan-17
+pergantian model level ++
+level 5 solved ++
+X,Y = 2,2 kesalahan gerak --

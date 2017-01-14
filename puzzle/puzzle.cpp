@@ -18,11 +18,6 @@
 
 #define true 1
 #define false 0
-
-#define easy 2
-#define medium 20
-#define hard 30
-
 #define caption " ----------------\n// GAME PUZZLE //\n----------------\n"
 
 #define fieldSize 3
@@ -300,10 +295,12 @@ void copyField() {
     }
 // end bot program
 void AllowMove(char field[3][3], char field2[3][3], int X, int Y){
-	int pilih,TempNilai;
-	TempNilai = 0;
+	int pilih,TempNilai,loop;
+	loop = 0;
 	bool moveleft,moveright,moveup,movedown;
 	moveleft = moveright = moveup = movedown = true;
+	while((cekUrut()==false)and(loop<=10)){
+	TempNilai = HitungUrut(field,field2);
 	switch(X){
 		case 0 : 
 		moveup = false;
@@ -322,13 +319,15 @@ void AllowMove(char field[3][3], char field2[3][3], int X, int Y){
 	}
 	if(moveup == true){
 		move(atas);
+		if(TempNilai >= HitungUrut(field,field2)){
 		TempNilai = HitungUrut(field,field2);
 		pilih = 0;
+		}
 		move(bawah);
 	}
 	if(movedown == true){
 		move(bawah);
-		if(TempNilai <= HitungUrut(field,field2)){
+		if(TempNilai >= HitungUrut(field,field2)){
 		TempNilai = HitungUrut(field,field2);
 		pilih = 1;
 		}
@@ -336,16 +335,15 @@ void AllowMove(char field[3][3], char field2[3][3], int X, int Y){
 	}
 	if(moveleft == true){
 		move(kiri);
-		if(TempNilai <= HitungUrut(field,field2)){
+		if(TempNilai >= HitungUrut(field,field2)){
 		TempNilai = HitungUrut(field,field2);
 		pilih = 2;
-	
 		}
 		move(kanan);
 	}
 	if(moveright == true){
 		move(kanan);
-		if(TempNilai <= HitungUrut(field,field2)){
+		if(TempNilai >= HitungUrut(field,field2)){
 		TempNilai = HitungUrut(field,field2);
 		pilih = 3;
 		}
@@ -354,17 +352,39 @@ void AllowMove(char field[3][3], char field2[3][3], int X, int Y){
 	switch(pilih) {
 		case 0 :
 			move(atas);
+			movedown = false;
+			moveup = true;
+			moveright = true;
+			moveleft = true;
 			break;
 		case 1 :
 			move(bawah);
+			moveup = false;
+			movedown = true;
+			moveright = true;
+			moveleft = true;
 			break;
 		case 2 :
 			move(kiri);
+			moveright = false;
+			moveup = true;
+			movedown = true;
+			moveleft = true;
 			break;
 		case 3 :
 			move(kanan);
+			moveleft = false;
+			moveup = true;
+			moveright = true;
+			movedown = true;
 			break;
 	}
+	loop += 1;
+	sleep(40);
+	X = TZero(field,X);
+	Y = TZero(field,Y);
+	printf("%i,%i \n",X,Y);
+	}			
 }
 //bagian akhir
 
@@ -396,31 +416,50 @@ main() {
     for(;;) {
         system("cls");
         puts("Level : ");
-        puts("\t1. Easy");
-        puts("\t2. Medium");
-        puts("\t3. Hard");
+        puts("\t1. Lvl 1");
+        puts("\t2. Lvl 2");
+        puts("\t3. Lvl 3");
+        puts("\t4. Lvl 4");
+        puts("\t5. Lvl 5");
+        puts("\t6. Lvl 6");
+        puts("\t7. Lvl 7");
+        puts("\t8. Lvl 8");
+        puts("\t9. Lvl 9");
+        puts("\t10. Lvl 10");
         printf("Pilih Level yang akan dimainkan : ");
         scanf("%i", &level);
         
         switch (level) {
             case 1 :
-                initField(easy);
+                initField(1);
                 break;
             case 2 :
-                initField(medium);
+                initField(2);
                 break;
             case 3 :
-                initField(hard);
+                initField(3);
                 break;
-            case 98 :
-            	//bot game triggered
-            	initField(easy);
-            	break;
-            case 99 :
-            	//bot game triggered
-            	sleep(1);
-            	initField(easy);
-            	break;
+            case 4 :
+                initField(4);
+                break;
+            case 5 :
+                initField(5);
+                break;
+            case 6 :
+                initField(7);
+                break;
+            case 7 :
+                initField(9);
+                break;
+            case 8 :
+                initField(11);
+                break;
+            case 9 :
+                initField(13);
+                break;
+            case 10 :
+                initField(15);
+                break;
             default :
                 puts("Level salah!!");
                 getch();
@@ -428,99 +467,109 @@ main() {
         }
         
         system("cls");
-        if(level==98){
-        	int nilai,loop;
-        	loop = 0;
+        	int nilai,X,Y;
 			generateOutput();
-			while((cekUrut() != true )and(loop < 100)){
-			AllowMove(field,field2,TZero(field,'X'),TZero(field,'Y'));
-            sleep(100);
-        	loop += 1;
-        	}
-		}
-		
-		//kamus untuk program
-        int ze,Hitung,HitungTemp,keZ; //var y untuk menghitung siapa yang paling sedikit mempunyai ke-Tidak sesuain
-        bool selesai;
-		if(level == 99){
-		generateOutput();
-            	sleep(5);
-			//run this
-			loop = 0;
-			selesai = false;
-			gerak[0] = 12;
-			gerak[1] = 12;
-			gerak[2] = 12;
-			gerak[3] = 12;
-			while((loop <= 100 )and(selesai == false)){
-				HitungTemp = 99;
-				keZ = 99;
-				for(ze=0;ze<=3;ze++){	
-				copyField(); 
-					if(gerak[ze]==12){	
-						switch(ze){
-						    	case 0 :
-				                    moveTemp(atas);
-				                    break;
-				                case 1 :
-				                    moveTemp(bawah);
-				                    break;
-				                case 2 :
-				                    moveTemp(kiri);
-				                    break;
-				                case 3 :
-				                    moveTemp(kanan);
-				                    break;
-				            }
-				            if(HitungUrut(fieldCopy,field) > 0 and HitungUrut(fieldCopy,field) < HitungUrut(field,field2)){
-								Hitung = HitungUrutFieldTemp();
-								if(Hitung <= HitungTemp){
-									keZ = ze;//memasukan instruksi mana yang akan dimasukan.
-									HitungTemp = Hitung;			
-            				}
-							}
-						}
+			//start
+			int pilih,TempNilai,loop;
+				loop = 0;
+				bool moveleft,moveright,moveup,movedown;
+				moveleft = moveright = moveup = movedown = true;
+				while((cekUrut()==false)and(loop<=10)){
+				X = TZero(field,'X');
+				Y = TZero(field,'Y');
+				TempNilai = HitungUrut(field,field2);
+				switch(X){
+					case 0 : 
+					moveup = false;
+					break;
+					case 2 :
+					movedown = false;
+					break;
+				}
+				switch(Y){
+					case 0 :
+					moveleft = false;
+					break;
+					case 2 :
+					moveright = false;
+					break;
+				}
+				if(moveup == true){
+					move(atas);
+					if(TempNilai >= HitungUrut(field,field2)){
+					TempNilai = HitungUrut(field,field2);
+					pilih = 0;
 					}
-					//pemilihan seleksi sudah benar
-					//move error
-            	generateOutput();
-            	if(cekUrut()==true){
-            		selesai == true;
-            		printf("SELESAI ? \n");
-            		sleep(10000);
+					move(bawah);
+				}
+				if(movedown == true){
+					move(bawah);
+					if(TempNilai >= HitungUrut(field,field2)){
+					TempNilai = HitungUrut(field,field2);
+					pilih = 1;
+					}
+					move(atas);
+				}
+				if(moveleft == true){
+					move(kiri);
+					if(TempNilai >= HitungUrut(field,field2)){
+					TempNilai = HitungUrut(field,field2);
+					pilih = 2;
+					}
+					move(kanan);
+				}
+				if(moveright == true){
+					move(kanan);
+					if(TempNilai >= HitungUrut(field,field2)){
+					TempNilai = HitungUrut(field,field2);
+					pilih = 3;
+					}
+					move(kiri);
+				}
+				switch(pilih) {
+					case 0 :
+						move(atas);
+						movedown = false;
+						moveup = true;
+						moveright = true;
+						moveleft = true;
+						break;
+					case 1 :
+						move(bawah);
+						moveup = false;
+						movedown = true;
+						moveright = true;
+						moveleft = true;
+						break;
+					case 2 :
+						move(kiri);
+						moveright = false;
+						moveup = true;
+						movedown = true;
+						moveleft = true;
+						break;
+					case 3 :
+						move(kanan);
+						moveleft = false;
+						moveup = true;
+						moveright = true;
+						movedown = true;
+						break;
 				}
 				loop += 1;
-            } 
+				sleep(40);
 		}
-			//end of bot
-			//note :
-			//masih salah dalam pengecekan kandidat yang bisa dilakukan.
-		else{
-		
-		generateOutput();
-        
-		while ((key = getch()) != 27) {
-            switch(key) {
-                case keyUp :
-                    move(atas);
-                    break;
-                case keyDown :
-                    move(bawah);
-                    break;
-                case keyLeft :
-                    move(kiri);
-                    break;
-                case keyRight :
-                    move(kanan);
-                    break;
-            }
+			//end
+			//AllowMove(field,field2,TZero(field,'X'),TZero(field,'Y'));
             if (cekUrut() == true) {
                 puts("\nANDA MENANG!!!");
-                system("PAUSE");
-                break;
+                sleep(100);
             }
-        }
-    	}
+            else {
+            	puts("\nGame tidak selesai!!!");
+            	sleep(100);
+			}
+			
         if (key == 27) {
             printf("Apakah anda ingin keluar ?\n['y' utk keluar / 't' utk reset] : ");
             system("PAUSE");
