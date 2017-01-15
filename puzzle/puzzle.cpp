@@ -10,12 +10,6 @@
 #define bawah 3
 #define kanan 4
 
-//4key
-#define keyUp 0x048
-#define keyDown 0x050
-#define keyLeft 0x04b
-#define keyRight 0x04d
-
 #define true 1
 #define false 0
 #define caption " ----------------\n// GAME PUZZLE //\n----------------\n"
@@ -26,7 +20,7 @@
 void clrscr() {
   #ifdef WINDOWS
   system("cls");
-  #define sleep(s) Sleep((s)*20);
+  #define sleep(s) Sleep((s)*100);
   #endif
   #ifdef LINUX
   system("clear");
@@ -167,7 +161,6 @@ void generateOutput() {
     int i, j, k;
     clrscr();
     puts(caption);
-    puts("Tekan ESC untuk keluar / reset permainan...");
     for(k = 1; k <= fieldSize; k++) printf("+----"); puts("+");
 
     for (i = 0; i<=(fieldSize - 1); i++) {
@@ -314,13 +307,21 @@ main() {
         system("cls");
         	int nilai,X,Y;
 			generateOutput();
+			printf("Game akan dimulai .. \n");
+			sleep(10);
+			printf("3 .. \n");
+			sleep(10);
+			printf("2 .. \n");
+			sleep(10);
+			printf("1 .. \n");
+			sleep(10);
 			//start
 			int pilih,TempNilai,loop;
 				loop = 0;
 				bool moveleft,moveright,moveup,movedown;
 				moveleft = moveright = moveup = movedown = true;
 				while((cekUrut()==false)and(loop<=900)){
-				pilih = 0; //kirim pilihan status default ke atas
+				pilih = 99; //kirim pilihan status default ke atas
 				X = TZero(field,'X');
 				Y = TZero(field,'Y');
 				TempNilai = HitungUrut(field,field2);
@@ -342,7 +343,7 @@ main() {
 				}
 				if(moveup == true){
 					move(atas);
-					if(TempNilai >= HitungUrut(field,field2)){
+					if(TempNilai >= HitungUrut(field,field2)or(pilih == 99)){
 					TempNilai = HitungUrut(field,field2);
 					pilih = 0;
 					}
@@ -350,7 +351,7 @@ main() {
 				}
 				if(movedown == true){
 					move(bawah);
-					if(TempNilai >= HitungUrut(field,field2)){
+					if(TempNilai >= HitungUrut(field,field2)or(pilih == 99)){
 					TempNilai = HitungUrut(field,field2);
 					pilih = 1;
 					}
@@ -358,7 +359,7 @@ main() {
 				}
 				if(moveleft == true){
 					move(kiri);
-					if(TempNilai >= HitungUrut(field,field2)){
+					if(TempNilai >= HitungUrut(field,field2)or(pilih == 99)){
 					TempNilai = HitungUrut(field,field2);
 					pilih = 2;
 					}
@@ -366,7 +367,7 @@ main() {
 				}
 				if(moveright == true){
 					move(kanan);
-					if(TempNilai >= HitungUrut(field,field2)){
+					if(TempNilai >= HitungUrut(field,field2)or(pilih == 99)){
 					TempNilai = HitungUrut(field,field2);
 					pilih = 3;
 					}
@@ -405,15 +406,13 @@ main() {
 				loop += 1;
 				sleep(10);
 		}
-			//end
-			//AllowMove(field,field2,TZero(field,'X'),TZero(field,'Y'));
             if (cekUrut() == true) {
-                puts("\nANDA MENANG!!!");
-                sleep(100);
+                puts("\nMENANG!!!");
+                sleep(30);
             }
             else {
-            	puts("\nGame tidak selesai!!!");
-            	sleep(100);
+            	puts("\nKALAH!!!");
+            	sleep(30);
 			}
 			
         if (key == 27) {
