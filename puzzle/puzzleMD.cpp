@@ -210,6 +210,8 @@ int TZero(char field[3][3],char kor){
     }
     return(nilai);
 }
+//tentukan acak
+//
 //bagian akhir
 //tentukan boleh move ke mana
 //hitung ke-TIDAK-sesuaian
